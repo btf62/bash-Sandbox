@@ -165,7 +165,13 @@ DECLARE @IncludeMatches BIT = 0; -- Set to 1 to show MATCH rows, 0 to hide them
 							CASE 
 								WHEN RIGHT(REPLACE(REPLACE(REPLACE(REPLACE(PN.Number, '-', ''), ' ', ''), '(', ''), ')', ''), 10)
 									<> RIGHT(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(T.PhoneNumber, '+', ''), '-', ''), ' ', ''), '(', ''), ')', ''), 10)
-								THEN CONCAT('Change Phone from ''', PN.Number, ''' to ''', RIGHT(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(T.PhoneNumber, '+', ''), '-', ''), ' ', ''), '(', ''), ')', ''), 10), '''') 
+								THEN CONCAT(
+                                    'Change Phone from ''',
+                                    STUFF(STUFF(RIGHT(REPLACE(REPLACE(REPLACE(REPLACE(ISNULL(PN.Number, ''), '-', ''), ' ', ''), '(', ''), ')', ''), 10), 4, 0, '-'), 8, 0, '-'),
+                                    ''' to ''',
+                                    STUFF(STUFF(RIGHT(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(T.PhoneNumber, '+', ''), '-', ''), ' ', ''), '(', ''), ')', ''), 10), 4, 0, '-'), 8, 0, '-'),
+                                    ''''
+                                )
 								ELSE '' 
 							END
 						)
