@@ -130,50 +130,66 @@ DECLARE @IncludeMatches BIT = 0; -- Set to 1 to show MATCH rows, 0 to hide them
 
 -- 🧾 Run audit report
 ;WITH AuditReport AS (
-SELECT
-    T.RecordNumber AS [OriginalRecord],
-    T.LastName,
-    T.FirstName,
-    CASE
-        WHEN P.Id IS NULL THEN 'NEW PERSON'
-        WHEN (
-            ISNULL(LOWER(P.Email), '') <> ISNULL(LOWER(T.Email), '') OR
-            RIGHT(REPLACE(REPLACE(REPLACE(REPLACE(PN.Number, '-', ''), ' ', ''), '(', ''), ')', ''), 10)
-            <> RIGHT(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(T.PhoneNumber, '+', ''), '-', ''), ' ', ''), '(', ''), ')', ''), 10)
-        ) THEN 'UPDATE DATA'
-        ELSE 'MATCH'
-    END AS [AuditStatus],
-    CASE
-        WHEN P.Id IS NULL THEN CONCAT('Add ', T.LastName, ' ', T.FirstName, ' ', T.Email, ' ', T.PhoneNumber)
-        WHEN (
-            ISNULL(LOWER(P.Email), '') <> ISNULL(LOWER(T.Email), '')
-        ) THEN CONCAT('Change Email from ''', P.Email, ''' to ''', T.Email, '''')
-        WHEN (
-            RIGHT(REPLACE(REPLACE(REPLACE(REPLACE(PN.Number, '-', ''), ' ', ''), '(', ''), ')', ''), 10)
-            <> RIGHT(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(T.PhoneNumber, '+', ''), '-', ''), ' ', ''), '(', ''), ')', ''), 10)
-        ) THEN CONCAT('Change Phone from ''', PN.Number,
-            ''' to ''', RIGHT(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(T.PhoneNumber, '+', ''), '-', ''), ' ', ''), '(', ''), ')', ''), 10), ''''
-            )
-        ELSE 'None'
-    END AS [Action]
-FROM
-    #TempEquipImport T
-    OUTER APPLY (
-        SELECT TOP 1 P.*
-        FROM Person P
-        WHERE 
-            LOWER(P.LastName) = LOWER(T.LastName)
-            AND (
-                LOWER(P.FirstName) = LOWER(T.FirstName)
-                OR LOWER(P.NickName) = LOWER(T.FirstName)
-            )
-        ORDER BY P.Id
-    ) P
-    OUTER APPLY (
-        SELECT TOP 1 PN.Number
-        FROM PhoneNumber PN
-        WHERE PN.PersonId = P.Id
-    ) PN
+    SELECT
+        T.RecordNumber AS [OriginalRecord],
+        T.LastName,
+        T.FirstName,
+        CASE
+            WHEN P.Id IS NULL THEN 'NEW PERSON'
+            WHEN (
+                ISNULL(LOWER(P.Email), '') <> ISNULL(LOWER(T.Email), '') OR
+                RIGHT(REPLACE(REPLACE(REPLACE(REPLACE(PN.Number, '-', ''), ' ', ''), '(', ''), ')', ''), 10)
+                <> RIGHT(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(T.PhoneNumber, '+', ''), '-', ''), ' ', ''), '(', ''), ')', ''), 10)
+            ) THEN 'UPDATE DATA'
+            ELSE 'MATCH'
+        END AS [AuditStatus],
+		CASE 
+			WHEN P.Id IS NULL THEN 
+				CONCAT(
+                    'Name: ''', T.FirstName, ' ', T.LastName, ''' ',
+                    'Email: ''', T.Email, ''' ',
+                    'Phone: ''',
+                    STUFF(STUFF(RIGHT(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(T.PhoneNumber, '+', ''), '-', ''), ' ', ''), '(', ''), ')', ''), 10), 4, 0, '-'), 8, 0, '-'),
+                    ''''
+                )
+			ELSE
+				-- Build action parts individually
+				LTRIM(
+					RTRIM(
+						CONCAT(
+							CASE 
+								WHEN ISNULL(LOWER(P.Email), '') <> ISNULL(LOWER(T.Email), '') 
+								THEN CONCAT('Change Email from ''', P.Email, ''' to ''', T.Email, '''; ') 
+								ELSE '' 
+							END,
+							CASE 
+								WHEN RIGHT(REPLACE(REPLACE(REPLACE(REPLACE(PN.Number, '-', ''), ' ', ''), '(', ''), ')', ''), 10)
+									<> RIGHT(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(T.PhoneNumber, '+', ''), '-', ''), ' ', ''), '(', ''), ')', ''), 10)
+								THEN CONCAT('Change Phone from ''', PN.Number, ''' to ''', RIGHT(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(T.PhoneNumber, '+', ''), '-', ''), ' ', ''), '(', ''), ')', ''), 10), '''') 
+								ELSE '' 
+							END
+						)
+					)
+				)
+		END AS [Action]
+    FROM
+        #TempEquipImport T
+        OUTER APPLY (
+            SELECT TOP 1 P.*
+            FROM Person P
+            WHERE 
+                LOWER(P.LastName) = LOWER(T.LastName)
+                AND (
+                    LOWER(P.FirstName) = LOWER(T.FirstName)
+                    OR LOWER(P.NickName) = LOWER(T.FirstName)
+                )
+            ORDER BY P.Id
+        ) P
+        OUTER APPLY (
+            SELECT TOP 1 PN.Number
+            FROM PhoneNumber PN
+            WHERE PN.PersonId = P.Id
+        ) PN
 )
 
 SELECT *
