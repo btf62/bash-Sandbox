@@ -27,7 +27,7 @@ VALUES
 (10, 'Zach', 'Grose', '+15855203582', 'zachgrose@gmail.com', CAST('2025-05-30T11:22:45' AS DATETIME), 'v1vas6i2tp1wwy1lcbv1vasedxnp1zg3'),
 (11, 'David', 'McIntyre', '+14073628582', 'djmcintyre121@gmail.com', CAST('2025-05-30T11:29:46' AS DATETIME), 'k6bixvys515oh8v6mb8nxgak6bixvyfz'),
 (12, 'Christina ', 'Diaz', '+15856039462', 'stinamdiaz@gmail.com', CAST('2025-05-30T11:32:17' AS DATETIME), 'enpc97xo3jk03h4x12fy5aenpclbq3fp'),
-(13, 'Dwight', 'Marble', '+15853299911', 'dwight.marble@gmail.com', CAST('2025-05-30T11:35:14' AS DATETIME), 'yhf9t25awz4hp2v8ttpyhf9s36xs0vw2'),
+(13, 'Dwight', 'Marble', '+15853299911', 'dmarble@northridgerochester.com', CAST('2025-05-30T11:35:14' AS DATETIME), 'yhf9t25awz4hp2v8ttpyhf9s36xs0vw2'),
 (14, 'Priya', 'Roberts Ramgarib', '+15167543638', 'pr9602@rit.edu', CAST('2025-05-30T11:39:01' AS DATETIME), 'phvv0v68ek6erfnrkw5phvwl85rl2wl0'),
 (15, 'Holly', 'Stachyra', '+19725336336', 'holly@stachyra.com', CAST('2025-05-30T12:00:40' AS DATETIME), 'm69az7ymcgu46wlpn3km69aoq9yefgfy'),
 (16, 'Philip', 'Accorso', '+15857979459', 'phila585@yahoo.com', CAST('2025-05-30T12:02:14' AS DATETIME), '0qh9cafjzj6d3rr10qh9cafxrwftqv3v'),
@@ -103,7 +103,7 @@ VALUES
 (86, 'Carlene', 'Black', '+15856228129', 'cbgdesigns@yahoo.com', CAST('2025-06-06T13:35:15' AS DATETIME), '4ou9s5r4vouwvlt4j0aqc8b8uv5xdn9j'),
 (87, 'Janel', 'Snitzel ', '+15852594166', 'jsnitzel1@gmail.com', CAST('2025-06-06T21:45:06' AS DATETIME), 'dj5agmakzin9vdwmdj5ag82z68ko4gei'),
 (88, 'Tiffany ', 'Redden ', '+15856430654', 'tiffie315@googlemail.com', CAST('2025-06-06T21:46:48' AS DATETIME), 'un9mmq8kicnzt4ukxj4uxun9mo6nt10r'),
-(89, 'Kristen', 'Jamison', '+15054142275', 'kjamison@rochesterchristianschool.org', CAST('2025-06-08T01:27:03' AS DATETIME), 'avpnzlhmofewlj3jxavpnnpaqe1ywrs3'),
+(89, 'Kristen', 'Jamison', '+15854142275', 'kjamison@rochesterchristianschool.org', CAST('2025-06-08T01:27:03' AS DATETIME), 'avpnzlhmofewlj3jxavpnnpaqe1ywrs3'),
 (90, 'Martin', 'Jamison', '+15853691148', 'mjamisonart@gmail.com', CAST('2025-06-08T02:03:16' AS DATETIME), 'c96ixju9ml7s3xh514c96ixk5fs2iqri'),
 (91, 'Andrew', 'Johnson', '+13078994981', 'andrewjrjohnson@gmail.com', CAST('2025-06-08T14:01:15' AS DATETIME), 'nmcub0vmnz5h785nmcubdrjfwsqnfbj0'),
 (92, 'Laura', 'Harding Smith', '+15857492097', 'laura_hardingsmith@yahoo.com', CAST('2025-06-08T14:01:33' AS DATETIME), '0aps474gm3jnftspdxxqlo0aps474hr5'),
@@ -122,7 +122,7 @@ VALUES
 (105, 'Neil', 'Herry', '+15854488685', 'nherry32@gmail.com', CAST('2025-06-08T19:53:43' AS DATETIME), 'radt7lkk4p1dy9itct8rradt58gx7l3z'),
 (106, 'Kristen', 'Vignare', '+15853634468', 'kvignare@yahoo.com', CAST('2025-06-08T22:25:32' AS DATETIME), 'd05ensphq3griuyo1a3d05endn6a8qmg'),
 (107, 'Ashley ', 'Graziose ', '+16079725382', 'ashleybender226@gmail.com', CAST('2025-06-08T23:35:36' AS DATETIME), 'ifpupulavaezjozvifpuwtdqp6xsf6ln'),
-(108, 'Ally', 'Pearson', '+15852006980', 'apearson0724@gmail.com', CAST('2025-06-08T23:36:35' AS DATETIME), 'tk46a3e4lt8yutk46aak727zcdn81x3h'),
+(108, 'Ally', 'Pearson', '+15852006980', 'apearson@northridgerochester.com', CAST('2025-06-08T23:36:35' AS DATETIME), 'tk46a3e4lt8yutk46aak727zcdn81x3h'),
 (109, 'Lucas', 'Lassinger', '+17164858600', 'lblassinger@gmail.com', CAST('2025-06-09T00:05:21' AS DATETIME), '9da7j0i2sawq0gaw9da7j6o8s26o9q30'),
 (110, 'Frances', 'Conde', '+15857038578', 'francespeo87@gmail.com', CAST('2025-06-09T04:55:20' AS DATETIME), 'ci3sixbeftiqlf07lyaci3sixbahfyd8')
 
