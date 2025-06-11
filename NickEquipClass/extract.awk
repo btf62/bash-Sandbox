@@ -1,25 +1,27 @@
-awk -F',' 'BEGIN {
-    OFS=", ";
+awk -F',' '
+BEGIN {
+    OFS = ", ";
     print "INSERT INTO #TempEquipImport (RecordNumber, FirstName, LastName, PhoneNumber, Email, Submitted, Token)\nVALUES"
 }
+
 NR > 1 {
-    # Sanitize apostrophes in all 7 fields
-    for (i = 1; i <= 7; i++) {
-        gsub(/'\''/, "''", $i);
-    }
+    # Copy and escape each field safely for SQL
+    fname = $1; gsub(/\047/, "''", fname);       # FirstName
+    lname = $2; gsub(/\047/, "''", lname);       # LastName with apostrophes
+    phone = $3; gsub(/\047/, "''", phone);       # Phone
+    email = $4; gsub(/\047/, "''", email);       # Email
+    submitted_raw = $5; gsub(/\047/, "''", submitted_raw);
+    token = $6; gsub(/\r/, "", token); gsub(/\047/, "''", token);  # Token and strip ^M
 
-    # Strip carriage return from final field
-    gsub(/\r/, "", $7);
-
-    # Convert Submitted field ($6) from M/D/YYYY H:MM:SS to YYYY-MM-DD HH:MM:SS
-    split($6, dt, " ");
+    # Convert Submitted field to SQL format (M/D/YYYY → YYYY-MM-DD)
+    split(submitted_raw, dt, " ");
     split(dt[1], d, "/");
     year = d[3];
     month = (length(d[1]) == 1 ? "0" d[1] : d[1]);
     day = (length(d[2]) == 1 ? "0" d[2] : d[2]);
     datetime = year "-" month "-" day "T" dt[2];
 
-    # Output SQL line
     printf("(%d, '\''%s'\'', '\''%s'\'', '\''%s'\'', '\''%s'\'', CAST('\''%s'\'' AS DATETIME), '\''%s'\''),\n",
-           NR, $1, $2, $3, $4, datetime, $7)
-}'
+           NR, fname, lname, phone, email, datetime, token)
+}
+'
